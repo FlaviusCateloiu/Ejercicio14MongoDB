@@ -23,7 +23,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        String uri = "mongodb+srv://miusuario:mipassword@miclusterad.619nifa.mongodb.net/?retryWrites=true&w=majority";
+        String uri = "mongodb+srv://user:mipassword@miclusterfla.qhq8cnu.mongodb.net/?retryWrites=true&w=majority";
 
         // Paso 1: Query a base de datos
         // Por defecto, intentará conectar al puerto 27017
