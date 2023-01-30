@@ -12,6 +12,6 @@ public class Modulo {
     private ObjectId id;
     private String nombre;
     private String curso;
-    private String horas;
+    private int horas;
     private List<Alumno> alumnos = new ArrayList<>();
 }

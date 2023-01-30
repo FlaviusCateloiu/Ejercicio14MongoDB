@@ -8,6 +8,6 @@ public interface Repository<T> {
     List<T> findAll();
     T findOneById(ObjectId id);
     void save(T t);
-    void updateById(ObjectId id);
+    void updateById(ObjectId id, T t);
     void deleteById(ObjectId id);
 }
