@@ -8,7 +8,6 @@ import org.bson.Document;
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
-import org.example.entities.Movie;
 import org.example.entities.Personas;
 
 import static com.mongodb.MongoClientSettings.getDefaultCodecRegistry;
@@ -24,7 +23,11 @@ public class App
 {
     public static void main( String[] args )
     {
-        String uri = "mongodb://user:mipassword@ec2-54-146-67-141.compute-1.amazonaws.com:27017/pelis";
+
+        String uri = "mongodb://user:mipassword@ec2-54-236-28-182.compute-1.amazonaws.com:27017";
+
+        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+        CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
 
         // Paso 1: Query a base de datos
         // Por defecto, intentará conectar al puerto 27017
@@ -43,8 +46,6 @@ public class App
         }
 
         // Paso 2: Uso de CodecRegistry para mapear clases POJO a Documentos
-        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
-        CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
 
         try (MongoClient mongoClient = MongoClients.create(uri)) {
             MongoDatabase database = mongoClient.getDatabase("pelis").withCodecRegistry(pojoCodecRegistry);

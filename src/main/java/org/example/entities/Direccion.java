@@ -2,11 +2,14 @@ package org.example.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 
 @Data
 @NoArgsConstructor
 public class Direccion {
-    private String ciudad;
+    private ObjectId id;
     private String calle;
-    private String codigo_postal;
+    private int numero;
+    private String poblacion;
+    private String provincia;
 }
