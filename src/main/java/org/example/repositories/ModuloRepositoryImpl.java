@@ -1,5 +1,6 @@
 package org.example.repositories;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Sorts;
@@ -17,8 +18,8 @@ public class ModuloRepositoryImpl implements Repository<Modulo> {
         collection = database.getCollection("modulos", Modulo.class);
     }
     @Override
-    public List<Modulo> findAll() {
-        return (List<Modulo>) collection.find();
+    public FindIterable<Modulo> findAll() {
+        return collection.find();
     }
 
     @Override
@@ -27,13 +28,15 @@ public class ModuloRepositoryImpl implements Repository<Modulo> {
     }
 
     @Override
-    public void save(Modulo modulo) {
+    public Modulo save(Modulo modulo) {
         collection.insertOne(modulo);
+        return modulo;
     }
 
     @Override
-    public void updateById(ObjectId id, Modulo modulo) {
+    public Modulo updateById(ObjectId id, Modulo modulo) {
         collection.replaceOne(eq("_id", id), modulo);
+        return modulo;
     }
 
     @Override

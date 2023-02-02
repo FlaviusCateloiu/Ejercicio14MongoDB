@@ -1,5 +1,6 @@
 package org.example.repositories;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.conversions.Bson;
@@ -17,8 +18,8 @@ public class ProfesorRepositoryImpl implements Repository<Profesor> {
         collection = database.getCollection("profesores", Profesor.class);
     }
     @Override
-    public List<Profesor> findAll() {
-        return (List<Profesor>) collection.find();
+    public FindIterable<Profesor> findAll() {
+        return collection.find();
     }
 
     @Override
@@ -27,13 +28,15 @@ public class ProfesorRepositoryImpl implements Repository<Profesor> {
     }
 
     @Override
-    public void save(Profesor profesor) {
+    public Profesor save(Profesor profesor) {
         collection.insertOne(profesor);
+        return profesor;
     }
 
     @Override
-    public void updateById(ObjectId id, Profesor profesor) {
+    public Profesor updateById(ObjectId id, Profesor profesor) {
         collection.replaceOne(eq("_id", id), profesor);
+        return profesor;
     }
 
     @Override

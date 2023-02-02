@@ -1,5 +1,6 @@
 package org.example.repositories;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.types.ObjectId;
@@ -15,8 +16,8 @@ public class AlumnoRepositoryImpl implements Repository<Alumno> {
         collection = database.getCollection("alumnos", Alumno.class);
     }
     @Override
-    public List<Alumno> findAll() {
-        return (List<Alumno>) collection.find();
+    public FindIterable<Alumno> findAll() {
+        return collection.find();
     }
 
     @Override
@@ -25,13 +26,15 @@ public class AlumnoRepositoryImpl implements Repository<Alumno> {
     }
 
     @Override
-    public void save(Alumno alumno) {
+    public Alumno save(Alumno alumno) {
         collection.insertOne(alumno);
+        return alumno;
     }
 
     @Override
-    public void updateById(ObjectId id, Alumno alumno) {
+    public Alumno updateById(ObjectId id, Alumno alumno) {
         collection.replaceOne(eq("_id", id), alumno);
+        return alumno;
     }
 
     @Override
@@ -39,7 +42,7 @@ public class AlumnoRepositoryImpl implements Repository<Alumno> {
         collection.deleteOne(eq("_id", id));
     }
 
-    public List<Alumno> findAllPendientes() {
-        return (List<Alumno>) collection.find(and(eq("curso", "2"), eq("curso", 1)));
+    public FindIterable<Alumno> findAllPendientes() {
+        return collection.find(and(eq("curso", "2"), eq("curso", 1)));
     }
 }
