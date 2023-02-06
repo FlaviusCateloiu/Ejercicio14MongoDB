@@ -34,8 +34,8 @@ public class ProfesorRepositoryImpl implements Repository<Profesor> {
     }
 
     @Override
-    public Profesor updateById(ObjectId id, Profesor profesor) {
-        collection.replaceOne(eq("_id", id), profesor);
+    public Profesor updateById(Profesor profesor) {
+        collection.replaceOne(eq("_id", profesor.getId()), profesor);
         return profesor;
     }
 

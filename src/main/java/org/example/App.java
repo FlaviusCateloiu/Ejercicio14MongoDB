@@ -20,23 +20,30 @@ public class App
         Direccion d1 = new Direccion("Monarca", 12, "Castellon", "Burriana");
 
         Profesor p1 = new Profesor("Pepe", "Marcos", "Lopez", "987987987", d1);
+        p1.setId(new ObjectId());
         Profesor p2 = new Profesor("Lucas", "Gimeno", "Prado", "987456786",
                 new Direccion("Lugubre", 3, "Valencia", "Cullera"));
-
-        Alumno a1 = new Alumno("Laura", "Lucena", "Parilla", "87967342D", "987432345");
-        Alumno a2 = new Alumno("Marisa", "Mendoza", "Ripolles", "34267342D", "988762345");
-        Alumno a3 = new Alumno("Carles", "Bustean", "Prado", "87943242D", "934532345");
+        p2.setId(new ObjectId());
 
         Modulo m1 = new Modulo("Matematicas", "2", 3, p1);
-        m1.addToListAlumno(a1);
+        m1.setId(new ObjectId());
         Modulo m2 = new Modulo("Fisica y Quimica", "4", 5, p2);
-        m2.addToListAlumno(a1);
-        m2.addToListAlumno(a3);
+        m2.setId(new ObjectId());
         Modulo m3 = new Modulo("Historia", "1", 2, p1);
-        m3.addToListAlumno(a2);
+        m3.setId(new ObjectId());
 
+        Alumno a1 = new Alumno("Laura", "Lucena", "Parilla", "87967342D", "987432345");
+        a1.addToListModulo(m2);
+        a1.setId(new ObjectId());
+        Alumno a2 = new Alumno("Marisa", "Mendoza", "Ripolles", "34267342D", "988762345");
+        a2.addToListModulo(m1);
+        a2.addToListModulo(m3);
+        a2.setId(new ObjectId());
+        Alumno a3 = new Alumno("Carles", "Bustean", "Prado", "87943242D", "934532345");
+        a3.addToListModulo(m3);
+        a3.setId(new ObjectId());
 
-        String uri = "mongodb://ec2-54-234-15-174.compute-1.amazonaws.com:27017";
+        String uri = "mongodb://ec2-100-25-4-113.compute-1.amazonaws.com:27017";
 
         CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
         CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
@@ -48,22 +55,32 @@ public class App
             AlumnoRepositoryImpl alumnos = new AlumnoRepositoryImpl(database);
             ModuloRepositoryImpl modulos = new ModuloRepositoryImpl(database);
 
-            //Guardar Profesores
-            profesores.save(p1);
-            profesores.save(p2);
+            //Guardar Modulos
+            modulos.save(m1);
+            modulos.save(m2);
+            modulos.save(m3);
 
             //Guardar Alumnos
             alumnos.save(a1);
             alumnos.save(a2);
             alumnos.save(a3);
 
-            //Guardar Modulos
-            modulos.save(m1);
-            modulos.save(m2);
-            modulos.save(m3);
+            //Mostrar todos los alumnos
+            alumnos.findAll().forEach(System.out::println);
 
-            //Mostrar todos los modulos
-            modulos.findAll().forEach(System.out::println);
+            //Update a un modulo
+            m1.setCurso("2");
+            modulos.updateById(m1);
+            System.out.println();
+            System.out.println(modulos.findOneById(m1.getId()));
+
+            //Mostrar Cursos
+            System.out.println();
+            modulos.findByCurso("1").forEach(System.out::println);
+
+            //Mostrar Alumnos con pendientes
+            System.out.println();
+            alumnos.findAllPendientes(database).forEach(System.out::println);
 
             //Eliminar los modulos
             modulos.deleteById(m1.getId());
@@ -75,9 +92,11 @@ public class App
             alumnos.deleteById(a2.getId());
             alumnos.deleteById(a3.getId());
 
-            //Elminar Profesores
+            //Eliminar Profesores
             profesores.deleteById(p1.getId());
             profesores.deleteById(p2.getId());
+
+            database.drop();
         }
     }
 }

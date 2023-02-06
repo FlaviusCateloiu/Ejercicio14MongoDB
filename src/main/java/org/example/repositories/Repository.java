@@ -9,6 +9,6 @@ public interface Repository<T> {
     FindIterable<T> findAll();
     T findOneById(ObjectId id);
     T save(T t);
-    T updateById(ObjectId id, T t);
+    T updateById(T t);
     void deleteById(ObjectId id);
 }

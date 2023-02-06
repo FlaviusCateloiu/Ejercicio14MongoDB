@@ -17,6 +17,7 @@ public class Modulo {
     private String curso;
     @NonNull
     private int horas;
+    @ToString.Exclude
     private List<Alumno> alumnos = new ArrayList<>();
     @NonNull
     private Profesor profesor;
@@ -24,4 +25,5 @@ public class Modulo {
     public void addToListAlumno(Alumno alumno) {
         alumnos.add(alumno);
     }
+
 }

@@ -23,4 +23,8 @@ public class Profesor {
     private Direccion direccion;
     @ToString.Exclude
     private List<Modulo> modulos = new ArrayList<>();
+
+    public void addModulo(Modulo modulo) {
+        modulos.add(modulo);
+    }
 }

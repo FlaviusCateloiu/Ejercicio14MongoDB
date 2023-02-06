@@ -21,6 +21,9 @@ public class Alumno {
     private String nia;
     @NonNull
     private String telefono;
-    @ToString.Exclude
     private List<Modulo> modulos = new ArrayList<>();
+
+    public void addToListModulo(Modulo modulo) {
+        modulos.add(modulo);
+    }
 }

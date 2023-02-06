@@ -5,7 +5,9 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Sorts;
 import org.bson.types.ObjectId;
+import org.example.entities.Alumno;
 import org.example.entities.Modulo;
+import org.example.entities.Profesor;
 
 import java.util.List;
 
@@ -34,8 +36,8 @@ public class ModuloRepositoryImpl implements Repository<Modulo> {
     }
 
     @Override
-    public Modulo updateById(ObjectId id, Modulo modulo) {
-        collection.replaceOne(eq("_id", id), modulo);
+    public Modulo updateById(Modulo modulo) {
+        collection.replaceOne(eq("_id", modulo.getId()), modulo);
         return modulo;
     }
 
@@ -44,7 +46,7 @@ public class ModuloRepositoryImpl implements Repository<Modulo> {
         collection.deleteOne(eq("_id", id));
     }
 
-    public Modulo findByCurso(String curso) {
-        return collection.find(eq("curso", curso)).sort(Sorts.descending("horas")).first();
+    public FindIterable<Modulo> findByCurso(String curso) {
+        return collection.find(eq("curso", curso)).sort(Sorts.descending("horas"));
     }
 }

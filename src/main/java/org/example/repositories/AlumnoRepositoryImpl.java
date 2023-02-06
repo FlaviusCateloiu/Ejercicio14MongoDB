@@ -5,6 +5,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.types.ObjectId;
 import org.example.entities.Alumno;
+import org.example.entities.Modulo;
 
 import java.util.List;
 
@@ -32,8 +33,8 @@ public class AlumnoRepositoryImpl implements Repository<Alumno> {
     }
 
     @Override
-    public Alumno updateById(ObjectId id, Alumno alumno) {
-        collection.replaceOne(eq("_id", id), alumno);
+    public Alumno updateById(Alumno alumno) {
+        collection.replaceOne(eq("_id", alumno.getId()), alumno);
         return alumno;
     }
 
@@ -42,7 +43,9 @@ public class AlumnoRepositoryImpl implements Repository<Alumno> {
         collection.deleteOne(eq("_id", id));
     }
 
-    public FindIterable<Alumno> findAllPendientes() {
-        return collection.find(and(eq("curso", "2"), eq("curso", 1)));
+    public FindIterable<Alumno> findAllPendientes(MongoDatabase database) {
+        MongoCollection<Modulo> modCollection = database.getCollection("modulos", Modulo.class);
+        FindIterable<Modulo> modCursosOneAndTwo = modCollection.find(or(eq("curso", "2"), eq("curso", "1")));
+        return collection.find(eq("modulos", modCursosOneAndTwo));
     }
 }
