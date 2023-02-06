@@ -60,12 +60,16 @@ public class App
             modulos.save(m2);
             modulos.save(m3);
 
+            //Mostrar todos los modulos
+            modulos.findAll().forEach(System.out::println);
+
             //Guardar Alumnos
             alumnos.save(a1);
             alumnos.save(a2);
             alumnos.save(a3);
 
             //Mostrar todos los alumnos
+            System.out.println();
             alumnos.findAll().forEach(System.out::println);
 
             //Update a un modulo
