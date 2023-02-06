@@ -43,7 +43,8 @@ public class App
         a3.addToListModulo(m3);
         a3.setId(new ObjectId());
 
-        String uri = "mongodb://ec2-100-25-4-113.compute-1.amazonaws.com:27017";
+        String uri = "mongodb://ec2-100-25-192-77.compute-1.amazonaws.com" +
+                ":27017";
 
         CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
         CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
