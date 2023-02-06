@@ -69,10 +69,10 @@ public class App
             alumnos.findAll().forEach(System.out::println);
 
             //Update a un modulo
-            m1.setCurso("2");
-            modulos.updateById(m1);
+            m2.setCurso("3");
+            modulos.updateById(m2);
             System.out.println();
-            System.out.println(modulos.findOneById(m1.getId()));
+            System.out.println(modulos.findOneById(m2.getId()));
 
             //Mostrar Cursos
             System.out.println();
