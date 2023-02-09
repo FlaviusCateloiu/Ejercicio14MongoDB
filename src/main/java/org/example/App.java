@@ -31,6 +31,8 @@ public class App
         m2.setId(new ObjectId());
         Modulo m3 = new Modulo("Historia", "1", 2, p1);
         m3.setId(new ObjectId());
+        Modulo m4 = new Modulo("Arte", "1", 5, p2);
+        m4.setId(new ObjectId());
 
         Alumno a1 = new Alumno("Laura", "Lucena", "Parilla", "87967342D", "987432345");
         a1.addToListModulo(m2);
@@ -41,10 +43,10 @@ public class App
         a2.setId(new ObjectId());
         Alumno a3 = new Alumno("Carles", "Bustean", "Prado", "87943242D", "934532345");
         a3.addToListModulo(m3);
+        a3.addToListModulo(m4);
         a3.setId(new ObjectId());
 
-        String uri = "mongodb://ec2-100-25-192-77.compute-1.amazonaws.com" +
-                ":27017";
+        String uri = "mongodb://ec2-52-91-117-81.compute-1.amazonaws.com:27017";
 
         CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
         CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
@@ -60,6 +62,7 @@ public class App
             modulos.save(m1);
             modulos.save(m2);
             modulos.save(m3);
+            modulos.save(m4);
 
             //Mostrar todos los modulos
             modulos.findAll().forEach(System.out::println);

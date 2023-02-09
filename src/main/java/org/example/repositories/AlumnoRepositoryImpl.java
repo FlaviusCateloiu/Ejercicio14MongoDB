@@ -47,6 +47,6 @@ public class AlumnoRepositoryImpl implements Repository<Alumno> {
     public FindIterable<Alumno> findAllPendientes(MongoDatabase database) {
         MongoCollection<Modulo> modCollection = database.getCollection("modulos", Modulo.class);
         FindIterable<Modulo> modCursosOneAndTwo = modCollection.find(or(eq("curso", "2"), eq("curso", "1")));
-        return collection.find(eq("modulos", modCursosOneAndTwo));
+        return collection.find(in("modulos", modCursosOneAndTwo));
     }
 }
